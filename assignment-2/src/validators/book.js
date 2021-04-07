@@ -4,7 +4,6 @@ import isEmpty from "is-empty"
 export const validateBookCreateInput = (data) => {
     const errors = {}
 
-    data.userId = !isEmpty(data.userId) ? data.userId : "";
     data.name = !isEmpty(data.name) ? data.name : "";
     data.productType = !isEmpty(data.productType) ? data.productType : "";
     data.author = !isEmpty(data.author) ? data.author : "";
@@ -15,10 +14,6 @@ export const validateBookCreateInput = (data) => {
     data.discount = !isEmpty(data.discount) ? data.discount : "0";
     data.description = !isEmpty(data.description) ? data.description : "";
     data.hidden = !isEmpty(data.hidden) ? data.hidden : false;
-
-    if (Validator.isEmpty(data.userId)) {
-        errors.userId = "User ID field is required";
-    }
 
     if (Validator.isEmpty(data.name)) {
         errors.name = "Name field is required";
