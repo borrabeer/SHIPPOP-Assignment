@@ -41,12 +41,14 @@ router.post("/create", requireJWTAuth, (req, res) => {
     if (!isValid) {
         return res.status(400).json(errors)
     }
+    const token = req.headers.authorization.slice(7);
+    const payload = jwt_decode(token);
     BookModel.findOne({ barcode: req.body.barcode }).then((book) => {
         if (book) {
             return res.status(400).json({ barcode: "Barcode already exists" })
         } else {
             const newBook = new BookModel({
-                userId: req.body.userId,
+                userId: payload.id,
                 name: req.body.name,
                 productType: req.body.productType,
                 author: req.body.author,
