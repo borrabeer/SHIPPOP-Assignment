@@ -7,6 +7,9 @@ import jwt_decode from "jwt-decode"
 
 const router = express.Router();
 
+// @route GET api/books/allbooks
+// @desc get all books with hidden = false
+// @access Public
 router.get("/allbooks", (req, res) => {
     BookModel.find({ hidden: false }).then((book) => {
         if (isEmpty(book)) {
@@ -16,6 +19,9 @@ router.get("/allbooks", (req, res) => {
     })
 })
 
+// @route GET api/books/:bookId
+// @desc get detail of a specific book from params
+// @access Public
 router.get("/:bookId", (req, res) => {
     BookModel.findById(req.params.bookId).then((book) => {
         return res.json(book)
@@ -26,6 +32,9 @@ router.get("/:bookId", (req, res) => {
 
 const requireJWTAuth = passport.authenticate("jwt", { session: false })
 
+// @route POST api/books/create
+// @desc send request to create a book
+// @access Private (need to verify token from headers)
 router.post("/create", requireJWTAuth, (req, res) => {
     const { errors, isValid } = validateBookCreateInput(req.body)
 
@@ -59,6 +68,9 @@ router.post("/create", requireJWTAuth, (req, res) => {
     })
 })
 
+// @route PATCH api/books/update/:bookId
+// @desc send request to edit a book
+// @access Private (need to verify token from headers)
 router.patch("/update/:bookId", requireJWTAuth, (req, res) => {
     const { errors, isValid } = validateBookUpdateInput(req.body)
 
@@ -99,6 +111,9 @@ router.patch("/update/:bookId", requireJWTAuth, (req, res) => {
     })
 })
 
+// @route DELETE api/books/delete/:bookId
+// @desc send request to delete a book
+// @access Private (need to verify token from headers)
 router.delete("/delete/:bookId", requireJWTAuth, (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwt_decode(token);

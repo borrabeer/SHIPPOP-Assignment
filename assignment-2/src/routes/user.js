@@ -6,6 +6,9 @@ import { UserModel } from "../models"
 
 const router = express.Router();
 
+// @route POST api/users/register
+// @desc send request to register a user
+// @access Public
 router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body)
 
@@ -44,6 +47,9 @@ router.post("/register", (req, res) => {
     })
 })
 
+// @route POST api/users/login
+// @desc send request to login and response JWT token
+// @access Public
 router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
 

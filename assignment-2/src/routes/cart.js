@@ -8,6 +8,9 @@ const router = express.Router();
 
 const requireJWTAuth = passport.authenticate("jwt", { session: false })
 
+// @route GET api/cart/
+// @desc send request to get products in cart
+// @access Private (need to verify token from headers)
 router.get("/", requireJWTAuth, (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwt_decode(token);
@@ -18,6 +21,9 @@ router.get("/", requireJWTAuth, (req, res) => {
     })
 })
 
+// @route POST api/cart/add
+// @desc send request to edit a book
+// @access Private (need to verify token from headers)
 router.post("/add", requireJWTAuth, (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwt_decode(token);
@@ -53,6 +59,9 @@ router.post("/add", requireJWTAuth, (req, res) => {
     })
 })
 
+// @route DELETE api/cart/remove
+// @desc send request to remove a product from cart
+// @access Private (need to verify token from headers)
 router.delete("/remove", requireJWTAuth, (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwt_decode(token);

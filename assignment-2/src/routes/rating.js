@@ -5,6 +5,9 @@ import jwt_decode from "jwt-decode"
 
 const router = express.Router();
 
+// @route GET api/rating/:bookId
+// @desc send request to edit a book
+// @access Public
 router.get("/:bookId", (req, res) => {
     RatingModel.find({ bookId: req.params.bookId }).then((rate) => {
         return res.status(200).json(rate)
@@ -15,6 +18,9 @@ router.get("/:bookId", (req, res) => {
 
 const requireJWTAuth = passport.authenticate("jwt", { session: false })
 
+// @route POST api/rating/rate
+// @desc send request to give a score for a book
+// @access Private (need to verify token from headers)
 router.post("/rate", requireJWTAuth, (req, res) => {
     const token = req.headers.authorization.slice(7);
     const payload = jwt_decode(token);
